@@ -1,7 +1,8 @@
 import './App.css';
 import Color from './Components/Colorsearch';
 import Header from './Components/header';
-import Search from './Components/Search';
+// import Example from './Example';
+
 function App() {
   return (
     <>
@@ -9,7 +10,8 @@ function App() {
 
         <Header />
         <Color />
-<Search/>
+
+{/* <Example/> */}
       </div>
 
     </>
