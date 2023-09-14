@@ -6,12 +6,11 @@ import Header from './Components/header';
 function App() {
   return (
     <>
-  <div>
+      <div>
 
         <Header />
         <Color />
 
-{/* <Example/> */}
       </div>
 
     </>

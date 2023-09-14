@@ -6,10 +6,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Color = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -27,9 +28,13 @@ const Color = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const handleClick = (event, newValue) => {
+        console.log(searchTerm, "searchterm+++");
+    }
     const handleSearch = (e, newValue) => {
         // const searchTerm = newValue.toString();
-        console.log(searchTerm, "serachterm+++");
+        console.log(searchTerm, "searchterm+++");
         // searchTerm=searchTerm.toLowerCase();
 
         const filteredResults = data.filter((item) =>
@@ -43,22 +48,22 @@ const Color = () => {
 
     function refreshPage() {
         window.location.reload(false);
-      }
+    }
     const auto = searchResults.map((ele) => {
         if (ele.type == "AUTO") {
-            return <h1>{ele.id} {ele.paintColor} {ele.paintQuality}</h1>             
+            return <h1>{ele.id}  {ele.paintColor}  {ele.paintQuality}  {ele.paintColorId}</h1>
         }
     })
 
     const reference = searchResults.map((ele) => {
         if (ele.type == "REFERENCE") {
-            return <h1>{ele.id} {ele.paintColor} {ele.paintQuality}</h1>
+            return <h1>{ele.id}  {ele.paintColor}  {ele.paintQuality}  {ele.paintColorId}</h1>
 
         }
     })
     const Commercial = searchResults.map((ele) => {
         if (ele.type == "COMMERCIAL") {
-            return <h1>{ele.id} {ele.paintColor} {ele.paintQuality}</h1>          
+            return <h1>{ele.id}  {ele.paintColor}  {ele.paintQuality}  {ele.paintColorId}</h1>
         }
     })
     function CustomTabPanel(props) {
@@ -96,62 +101,74 @@ const Color = () => {
     }
     return (
 
-        <Box sx={{ pl: 80 }}>
+        <Box sx={{ m: 3, pl: 80 }}>
 
             <Typography variant="h5" gutterbottom>
                 Color Search
             </Typography>
-
             <div>
-                <Grid container spacing={1} >
-                    <Grid item xs={5}>
-                        <Autocomplete
-                            disablePortal
-                            freeSolo
-                            id="combo-box-demo"
-                            options={data.map((option) => option.paintColor)}
-                            value={searchTerm}
-                            sx={{ width: 300 }}
-                            onInputChange={handleSearch}
-                            renderInput={(params) => <TextField {...params} label="search" />}
-                        />
-                    </Grid>
 
-                    <Grid item xs={4}>
-                        <Button variant="outlined"> <AddAPhotoIcon />  import Panel  </Button>
-                    </Grid>
-                </Grid>
-                <div>
+                <div style={{ display: "flex" }}>
+                    <Divider />
+                    <Autocomplete
+                        disablePortal
+                        freeSolo
+                        id="combo-box-demo"
+                        options={data.map((option) => option.paintColor)}
+                        value={searchTerm}
+                        sx={{ width: 300 }}
+                        onInputChange={handleSearch}
+                        renderInput={(params) => <TextField color="success" {...params} label="search" />}
+                    />
 
-                    <Box sx={{ width: '100%' }}>
-                        <Box sx={{ borderColor: 'divider' }}>
-                            <Grid container spacing={1}>
-                                <Grid item xs={8}>
-                                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                        <Tab label="AUTO" {...a11yProps(0)} />
-                                        <Tab label="cOMMERCIAL" {...a11yProps(1)} />
-                                        <Tab label="REFERENCE" {...a11yProps(2)} />
-                                    </Tabs>
-                                </Grid>
 
-                                <Grid item xs={4}>
-                                    <Button  variant="outlined" onClick={refreshPage}>Clear Search</Button>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                        <CustomTabPanel value={value} index={0}>
-                            {auto}
-                        </CustomTabPanel>
-                        <CustomTabPanel value={value} index={1}>
-                            {Commercial}
-                        </CustomTabPanel>
-                        <CustomTabPanel value={value} index={2}>
-                            {reference}
-                        </CustomTabPanel>
-                    </Box>
+                    <IconButton type="button" value={searchTerm} class="test" onClick={handleClick} >
+                        <SearchIcon />
+                    </IconButton>
 
                 </div>
+                {/* </div>
+                <Autocomplete
+                    disablePortal
+                    freeSolo
+                    id="combo-box-demo"
+                    options={data.map((option) => option.paintColor)}
+                    value={searchTerm}
+                    sx={{ width: 300 }}
+                    onInputChange={handleSearch}
+                    renderInput={(params) => <TextField {...params}  label="search" /> }                   
+                />
+                <div> */}
+
+                <Box sx={{ width: '100%' }}>
+                    <Box sx={{ borderColor: 'divider' }}>
+                        <Grid container spacing={1}>
+                            <Grid item xs={8}>
+                                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                                    <Tab label="AUTO" {...a11yProps(0)} />
+                                    <Tab label="cOMMERCIAL" {...a11yProps(1)} />
+                                    <Tab label="REFERENCE" {...a11yProps(2)} />
+                                </Tabs>
+                            </Grid>
+
+                            <Grid item xs={4}>
+                                <Button variant="outlined" onClick={refreshPage}>Clear Search</Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                    <CustomTabPanel value={value} index={0}>
+                        {auto}
+                    </CustomTabPanel>
+                    <CustomTabPanel value={value} index={1}>
+                        {Commercial}
+                    </CustomTabPanel>
+                    <CustomTabPanel value={value} index={2}>
+                        {reference}
+                    </CustomTabPanel>
+                </Box>
+
             </div>
+
         </Box>
     );
 };
